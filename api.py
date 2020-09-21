@@ -109,13 +109,13 @@ class PetFriends:
 
     def update_information_about_pet(self, auth_key, pet_id, name, animal_type, age):
         """This method allows to update information about pet."""
-        data = MultipartEncoder(
-            fields={
-                'name': name,
-                'animal_type': animal_type,
-                'age': age
-            })
-        headers = {'auth_key': auth_key['key'], 'Content-Type': data.content_type}
+
+        data = {
+            'name': name,
+            'animal_type': animal_type,
+            'age': age
+        }
+        headers = {'auth_key': auth_key['key']}
 
         res = requests.put(self.base_url + f'api/pets/{pet_id}', headers=headers, data=data)
         status = res.status_code

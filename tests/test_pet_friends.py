@@ -1,5 +1,5 @@
 from api import PetFriends
-from settings import valid_email, valid_password
+from settings import valid_email, valid_password, valid_photo
 
 
 pf = PetFriends()
@@ -16,13 +16,13 @@ def test_get_all_pets_with_valid_key(filter=''):
     assert status == 200, "Status error"
     assert len(result['pets']) > 0
 
-def test_add_information_about_new_pet_with_valid_key(name="Jake", animal_type="cat", age='4', pet_photo="images/catt.jpeg"):
+def test_add_information_about_new_pet_with_valid_key(name="Jake", animal_type="cat", age='4', pet_photo=valid_photo):
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     status, result = pf.add_information_about_new_pet(auth_key, name, animal_type, age, pet_photo)
     assert status == 200, "Status error"
     assert result['name'] == name
 
-def test_add_photo_of_pet(pet_photo="images/catt.jpeg", filter=''):
+def test_add_photo_of_pet(pet_photo=valid_photo, filter=''):
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, filter)
 
@@ -38,3 +38,11 @@ def test_add_information_about_new_pet_without_photo(name="Kennedy", animal_type
     print(result)
     assert status == 200, "Code error!"
     # assert
+
+def test_update_information_about_pet(name="Kesha", animal_type="parrot", age=20):
+    _, auth_key = pf.get_api_key(valid_email, valid_password)
+    _, my_pets = pf.get_list_of_pets(auth_key, filter='')
+    status, result = pf.update_information_about_pet(auth_key, pet_id=my_pets[0]['id'])
+    assert status == 200, "Code error"
+    assert result['age'] == 20
+
