@@ -25,7 +25,7 @@ class PetFriends:
 
         return status, result
 
-    def get_list_of_pets(self, auth_key, filter):
+    def get_list_of_pets(self, auth_key: str, filter: str):
         """This method allows to get the list of pets."""
 
         headers = {'auth_key': auth_key['key']}
@@ -42,7 +42,7 @@ class PetFriends:
 
         return status, result
 
-    def add_information_about_new_pet(self, auth_key, name, animal_type, age, pet_photo):
+    def add_information_about_new_pet(self, auth_key: str, name: str, animal_type: str, age: int, pet_photo):
         """This method allows to add information about new pet."""
 
         data = MultipartEncoder(
@@ -65,16 +65,15 @@ class PetFriends:
 
         return status, result
 
-    def add_information_about_new_pet_without_photo(self, auth_key, name, animal_type, age):
+    def add_information_about_new_pet_without_photo(self, auth_key: str, name: str, animal_type: str, age: int):
         """This method allows to add information about new pet without photo."""
 
-        data = MultipartEncoder(
-            fields={
-                'name': name,
-                'animal_type': animal_type,
-                'age': age
-            })
-        headers = {'auth_key': auth_key['key'], 'Content-Type': data.content_type}
+        data = {
+            'name': name,
+            'animal_type': animal_type,
+            'age': age
+        }
+        headers = {'auth_key': auth_key['key']}
 
         res = requests.post(self.base_url + f'api/create_pet_simple', headers=headers, data=data)
         status = res.status_code
@@ -87,7 +86,7 @@ class PetFriends:
 
         return status, result
 
-    def add_photo_of_pet(self,auth_key, pet_id, pet_photo):
+    def add_photo_of_pet(self,auth_key: str, pet_id: str, pet_photo):
         """This method allows to add photo of a pet."""
 
         data = MultipartEncoder(
@@ -107,7 +106,7 @@ class PetFriends:
 
         return status, result
 
-    def update_information_about_pet(self, auth_key, pet_id, name, animal_type, age):
+    def update_information_about_pet(self, auth_key: str, pet_id: str, name: str, animal_type: str, age: int):
         """This method allows to update information about pet."""
         data = MultipartEncoder(
             fields={
@@ -128,7 +127,7 @@ class PetFriends:
 
         return status, result
 
-    def delete_pet_from_database(self,auth_key, pet_id):
+    def delete_pet_from_database(self,auth_key: str, pet_id: str):
         """This method allows to delete information about pet from database."""
 
         headers = {'auth_key': auth_key['key']}
